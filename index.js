@@ -1,12 +1,6 @@
 const xml = require('xml')
 
-exports.createSVG = (coordinates = [
-    
-    [[50,50],[50,100],[250,100],[250,50]],
-
-    [[60,60],[60,90],[240,90],[240,60]]
-
-], svgproperties, pathproperties) => {
+exports.SVG = function (svgproperties = {}) {
 
     svgproperties = {...{
 
@@ -17,44 +11,58 @@ exports.createSVG = (coordinates = [
 
     }, ...svgproperties}
 
-    pathproperties = {...{
+    this.xml = [{
 
-        pathlength: 100,
-        stroke: 'none',
-        fill: 'black'
+        svg: [
+            
+            {_attr : {...{'version': '1.1'}, ...svgproperties}},
 
-    }}
 
-    let coordstring = ''
+        ]
 
-    for (let i = 0; i < coordinates.length; i++){
+    }]
 
-        coordstring = coordstring + 'M'
+    this.newPath = (coordinates = [
+    
+        [[50,50],[50,100],[250,100],[250,50]],
+    
+        [[60,60],[60,90],[240,90],[240,60]]
+    
+    ], pathproperties = {}) => {
 
-        for (let t = 0; t < coordinates[i].length; t++){
-        coordstring = coordstring + (' ' + coordinates[i][t][0] + ',' + coordinates[i][t][1])
+        pathproperties = {...{
+    
+            pathlength: 100,
+            stroke: 'none',
+            fill: 'black'
+    
+        }}
+    
+        let coordstring = ''
+    
+        for (let i = 0; i < coordinates.length; i++){
+    
+            coordstring = coordstring + 'M'
+    
+            for (let t = 0; t < coordinates[i].length; t++){
+            coordstring = coordstring + (' ' + coordinates[i][t][0] + ',' + coordinates[i][t][1])
+            }
+    
+            coordstring = coordstring + ' z '
+    
         }
 
-        coordstring = coordstring + ' z '
+        this.xml[0].svg.push({path: [
+            {_attr: {...pathproperties, d: coordstring}},
+            
+        ]})
 
     }
 
-    xmlObject = [{
+    this.getXML = () => {
 
-            svg: [
-                
-                {_attr : {...{'version': '1.1'}, ...svgproperties}},
-                {path: [
-                    {_attr: {...pathproperties, d: coordstring}},
-                    
-                ]}
+        svgxml = xml(this.xml)
+        return(svgxml)
 
-            ]
-
-        }]
-
-    svgxml = xml(xmlObject)
-    return(svgxml)
-
-
+    }
 }

@@ -15,37 +15,49 @@ Coordinate SVG is a simple package that will allow you to tranform any set of co
 ## Format Coordinates
 
 * Each coordinate should be expressed as an array in the form `[x, y]`.
-* This array should then be stored in an array storing a set of coordinates, forming a path:  `[[x,y],[x,y],[x,y] ...  ]`.
-* This array should be stored in another array which will contain all the paths of the shape:  `[[[x,y],[x,y],[x,y] ...  ],[[x,y],[x,y],[x,y] ...  ]]`
+* This array should then be stored in an array storing a set of coordinates, forming a subpath:  `[[x,y],[x,y],[x,y] ...  ]`.
+* This array should be stored in another array which will contain all the subpaths of the path shape:  `[[[x,y],[x,y],[x,y] ...  ],[[x,y],[x,y],[x,y] ...  ]]`
 
-> Paths are expressed in the form `d = M <path 1> z M <path 2> z ...`. To form a solid shape, express only one set of coordinates surrounded by **Double Square Brackets [ ]** ( eg. `[[[x,y],[x,y],[x,y]]]`). Further paths can be used to great gaps or holes inside a solid shape. 
+> Subpaths are expressed in the form `d = M <subpath 1> z M <subpath 2> z ...`. To form a solid shape, express only one set of coordinates surrounded by **Double Square Brackets [ ]** ( eg. `[[[x,y],[x,y],[x,y]]]`). Further subpaths can be used to great gaps or holes inside a solid shape. 
+
+## Create a New SVG
+
+To create a new SVG enclosed, use `new svg.SVG( {Properties} )`. This will create a new XML object wrapped in `<SVG>` tags. The `SVG()` function takes one parameter:
+
+|  Parameter  | Type| |
+| ------------- | ------------- |-|
+| SVG Properties  | Object |XML attributes for the parent `<SVG>` element. Expressed as a javascript object. For example: `{height: 500, width: 500}`. For all possible attributes, see the [Documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg).|
+
+`new svg.SVG( Properties )`
 
 
+## Create a New Shape:
 
-## Convert to SVG:
-
-To convert your coordinates into an SVG, use the `.createSVG()` command. The command has the following parameters:
+To create a new shape inside your SVG, use `mySVG.newPath( Coordinates , {Properties} )`. This will create a new `<Path>` element inside the `<SVG>` tags, in the shape of the given coordinates. The `newPath()` function takes two parameters:
 
 |  Parameter  | Type| |
 | ------------- | ------------- |-|
 | Coordinates  | Array  |Coordinates to convert to SVG, see above for formatting.|
-| SVG Properties  | Object |XML attributes for the parent `<SVG>` element. Expressed as a javascript object. For example: `{height: 500, width: 500}`. For all possible attributes, see the [Documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg).|
 |Path Properties|Object|XML attributes for the chils `<Path>` element. Expressed as a javascript object. For example: `{stroke: 'none', fill: 'black'}`. For all possible attributes, see the [Documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/path) |
 
-`coordinate_svg.createSVG( Coordinates, SVG Properties, Path Properties )`
+`mySVG.createSVG( Coordinates, Path Properties )`
+ 
+## Obtain the SVG as XML
+
+The command `mySVG.getXML()` will return `mySVG` as a raw XML string.
 
 > The resulting svg file will be returned as raw XML. This can then be saved to a .svg file, or further utilised in a program.
 
 # Example
 
 ```
-// Import built in File System module
+// Import built in File System Module
 
 const fs = require('fs')
 
-// Import Coordinate SVG as svg
+// Import Coordinate SVG  Module as svg
 
-const svg = require('coordinate_svg')
+const svg = require('./index')
 
 // Configure coordinates
 
@@ -61,16 +73,28 @@ const coordinates = [
 
 ]
 
-// Create a vector using the coordinates, with height 150px and width 300 px
+// Create a new XML object enclosed in <SVG> tags
 
-var xml = svg.createSVG(coordinates, {
+var mySVG = new svg.SVG(
 
-    height : 150,
-    width : 300,
+    {
 
-})
+        height : 150,
+        width : 300,
+    
+    }
 
-// Save the resulting svg a file named "example.svg"
+)
+
+// Create a new <Path> element inside the XML object
+
+mySVG.newPath(coordinates)
+
+// Get the XML object as a raw XML string
+
+var xml = mySVG.getXML()
+
+// Save the XML into a file named "example.svg"
 
 fs.appendFile('example.svg', xml, () => {})
 
