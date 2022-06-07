@@ -2,10 +2,22 @@
   "name": "coordinate_svg",
   "version": "1.0.1",
   "description": "A simple package for converting a set of path coordinates to an svg polygon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timceharris/coordinate_svg"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "keywords": [
+    "svg",
+    "html",
+    "xml",
+    "graphs",
+    "maps",
+    "image"
+  ]
 }
