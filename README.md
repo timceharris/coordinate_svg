@@ -82,4 +82,4 @@ The contents of example.svg will be:
 
 Which will be displayed as:
 
-<svg version="1.1" height="150" width="300" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"><path pathlength="100" stroke="none" fill="black" d="M 50,50 50,100 250,100 250,50 z M 60,60 60,90 240,90 240,60 z "></path></svg>
+![](https://svgur.com/i/i78.svg)
