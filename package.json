@@ -1,6 +1,6 @@
 {
   "name": "coordinate_svg",
-  "version": "2.0.0",
+  "version": "1.1.0",
   "description": "A simple package for converting a set of path coordinates to an svg polygon",
   "repository": {
     "type": "git",
