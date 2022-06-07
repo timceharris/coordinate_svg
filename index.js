@@ -1,4 +1,4 @@
-const createSVG = (array = [[50,50],[50,100],[250,100],[250,50]],height = 150,width = 300) => {
+exports.createSVG = (array = [[50,50],[50,100],[250,100],[250,50]],height = 150,width = 300) => {
 
     let coordstring = ''
 
